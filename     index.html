@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FUNToken Guide</title>
+<style>
+:root{
+ color-scheme:light dark;
+ --bg:light-dark(#eef2f6,#070b10);
+ --surface:light-dark(#ffffff,#10161e);
+ --surface-2:light-dark(#f7f9fc,#151d27);
+ --surface-3:light-dark(#edf3fa,#0c131b);
+ --text:light-dark(#17212b,#f4f7fb);
+ --muted:light-dark(#657383,#9aa9b9);
+ --line:light-dark(#dce3eb,#273342);
+ --accent:light-dark(#1769e0,#63a1ff);
+ --accent-2:light-dark(#0d4fae,#8bbcff);
+ --accent-soft:light-dark(#eaf3ff,#10243e);
+ --shadow:0 18px 50px rgba(19,35,54,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;line-height:1.72}
+button,a{font:inherit} a{color:var(--accent);text-decoration:none;overflow-wrap:anywhere}
+a:hover{text-decoration:none}
+.app{min-height:100vh;background:var(--bg)}
+.wrap{width:min(1060px,calc(100% - 30px));margin:0 auto;padding:24px 0 70px}
+.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:28px;background:linear-gradient(135deg,var(--surface),var(--surface-2));padding:42px 44px 38px;box-shadow:var(--shadow);margin-bottom:15px}
+.hero:after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-80px;top:-110px;background:var(--accent-soft);opacity:.75}
+.hero-kicker{position:relative;z-index:1;display:inline-flex;align-items:center;gap:8px;padding:7px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--accent);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+.hero-kicker span{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block}
+.hero h1{position:relative;z-index:1;font-size:clamp(38px,6vw,66px);line-height:1.02;letter-spacing:-.055em;margin:18px 0 8px;font-weight:850}
+.author{position:relative;z-index:1;color:var(--muted);font-size:15px;font-weight:600}
+.nav-shell{position:sticky;top:10px;z-index:20;margin:0 0 18px;padding:9px;border:1px solid var(--line);border-radius:18px;background:color-mix(in srgb,var(--surface) 88%,transparent);backdrop-filter:blur(14px);box-shadow:0 10px 30px rgba(18,31,46,.08)}
+.toc{display:flex;flex-wrap:wrap;gap:6px}
+.toc a{display:inline-flex;align-items:center;padding:8px 11px;border:1px solid transparent;border-radius:10px;color:var(--muted);font-size:12px;font-weight:750;transition:.16s ease}
+.toc a:hover{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 25%,var(--line))}
+.content{display:flex;flex-direction:column;gap:16px}
+.block{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:32px 34px 35px;box-shadow:var(--shadow);overflow:hidden}
+.block:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--accent),transparent)}
+.block h2{font-size:25px;line-height:1.22;margin:0 0 17px;letter-spacing:-.025em;font-weight:800}
+.block h3{font-size:17px;line-height:1.35;margin:26px 0 10px;letter-spacing:-.01em;font-weight:780}
+.block p{margin:10px 0;color:var(--text)}
+.block ul{margin:11px 0 17px;padding-left:22px}.block li{padding-left:5px;margin:5px 0}
+.quote{border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:12px;padding:13px 16px;margin:19px 0;background:var(--surface-2);font-weight:700}
+.rule{border:0;border-top:1px dashed var(--line);margin:30px 0}
+.callout{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line));border-radius:15px;padding:16px 18px;margin:16px 0}
+.section-num{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 8px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:13px;margin-right:7px;vertical-align:2px}
+.link-line{display:flex;align-items:center;gap:11px;margin:11px 0;padding:13px 15px;background:var(--surface-3);border:1px solid var(--line);border-radius:13px;font-size:13px;font-weight:650;transition:.15s ease}
+.link-line:hover{border-color:color-mix(in srgb,var(--accent) 45%,var(--line));background:var(--accent-soft);transform:translateY(-1px)}
+.link-icon{width:22px;height:22px;flex:0 0 22px;display:grid;place-items:center;border-radius:7px;background:var(--accent);color:white}
+.link-icon svg{width:14px;height:14px;fill:currentColor}
+.game-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 4px}
+.game-card{display:flex;align-items:center;gap:12px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface-2);color:var(--text);transition:.16s ease}
+.game-card:hover{border-color:var(--accent);background:var(--accent-soft);transform:translateY(-2px)}
+.game-card .play-icon{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);color:var(--accent);flex:0 0 38px}
+.game-card .play-icon svg{width:22px;height:22px}.game-name{font-weight:800;font-size:14px}.game-sub{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.image-wrap{margin:18px 0 23px;display:block}.image-wrap a{display:block;line-height:0}.image-wrap img{display:block;width:auto;max-width:100%;height:auto;max-height:820px;margin:0 auto;object-fit:contain;border-radius:17px;border:1px solid var(--line);background:var(--surface-2);box-shadow:0 10px 30px rgba(16,32,52,.10)}
+.image-label{display:none}
+.support-card{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--surface-2);margin-top:10px}.telegram-icon{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#229ED9;color:#fff;flex:0 0 42px}.telegram-icon svg{width:24px;height:24px;fill:currentColor}.support-handle{font-weight:800}.support-sub{font-size:12px;color:var(--muted)}
+.footer{margin-top:28px;color:var(--muted);font-size:12px;text-align:center}.top{position:fixed;right:18px;bottom:18px;width:45px;height:45px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,.13);font-size:18px;z-index:30}
+@media(max-width:720px){.wrap{width:min(100% - 16px,1060px);padding-top:12px}.hero{padding:28px 23px 27px;border-radius:21px}.hero h1{font-size:40px}.nav-shell{top:6px}.toc{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.toc::-webkit-scrollbar{display:none}.toc a{white-space:nowrap}.block{padding:25px 20px 27px;border-radius:19px}.block h2{font-size:21px}.game-links{grid-template-columns:1fr}.image-wrap img{width:100%;max-height:none}.top{right:10px;bottom:10px}}
+</style>
+</head>
+<body>
+<div class="app" id="top">
+<main class="wrap">
+<header class="hero"><h1>FUNToken Guide</h1><div class="author">By ~ @FUN_Detective</div></header>
+<div class="nav-shell"><nav class="toc" aria-label="Guide sections">
+<a href="#account-setup">Account Setup</a>
+<a href="#mobile-games">Mobile Games</a>
+<a href="#game-login">How to Log In</a>
+<a href="#schedule">Game Schedule</a>
+<a href="#earnings">Earnings</a>
+<a href="#daily-work">Daily Work</a>
+<a href="#community">Community</a>
+<a href="#support">Support</a>
+<a href="#withdrawals">Withdrawals</a>
+</nav></div>
+<div class="content">
+<section class="block">
+<h2>FUN-Fact:</h2>
+<p>Before we start let me tell you something, from 1 Mobile Game We Get 1275 Spins.</p>
+<p>From these spins we can get 2000 $FUN estimated</p>
+<p>The minimum withdrawal is 2000 $FUN</p>
+<p>2000 $FUN = (16$) at $0.0079</p>
+<p>FUN is listed on Mexc Exchange.</p>
+<p>So, This is the Earning of 1 Mobile Game.</p>
+<p>8 Mobile Games have been launched So Far.</p>
+<p>New Games come every month.</p>
+<p>You can calculate Your Estimated Earnings.</p>
+<p class="quote">Discoverers make history. Always.</p>
+<h2>How it Works?</h2>
+<p>Users participate in mobile games and other activities within the project, which generates funds in the project’s wallet. These funds are then used to provide users with monthly earnings. Check Screenshot for wallet balance and daily transactions. Clear proof and supporting details will be shared once y’all Participate.</p>
+<p class="quote">May the Odds Be Ever In Your Favour.</p>
+<p>To Participate Check Instructions Below</p>
+</section>
+
+<section class="block" id="account-setup">
+<h2>Account Setup</h2>
+<p>If you do not already have 2 Telegram accounts, you will use 2 accounts for this setup:</p>
+<ul><li>Account 1: Created and used through the Mises Browser</li><li>Account 2: Created through Telegram and used through Chrome</li></ul>
+<p>The Mises account will need to be linked with your Telegram account when you are ready to make a withdrawal.</p>
+<p><strong>Important:</strong> Each FUNToken account should use its own email address. The email connected to each FUNToken account must also be used to log in to the mobile games assigned to that account.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/7P1tbs2V/IMG-9929.jpg" alt="Image 1"></div>
+<hr class="rule">
+<h3>1. Mises Browser Account</h3>
+<p>For the account you will use through the Mises Browser:</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/BbJgx3FS/IMG-9930.jpg" alt="Image 2"></div>
+<p>Open the Mises Browser and paste this link into the search bar:</p>
+<p class="link-line"><a href="https://ft.games/?r=bct8yzhn" target="_blank" rel="noopener">https://ft.games/?r=bct8yzhn</a></p>
+<p>Open the link. You will see a Sign In option.</p>
+<p>Sign in using your email address. Your FUNToken account will then be created and connected to your Mises Browser setup.</p>
+<p>You can start working through this account. When you are ready to withdraw, the Mises account will be linked with Telegram as part of the withdrawal process.</p>
+<p><strong>Important</strong></p>
+<p>The email address you use for this FUNToken account must also be used when logging in to the mobile games for this account.</p>
+<p>The rewards earned from completing game levels will be credited to the same FUNToken account connected to that email.</p>
+<hr class="rule">
+<h3>2. Telegram Account</h3>
+<p>For the second account:</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/NjZkdmXK/IMG-9931.jpg" alt="Image 3"></div>
+<p>Open Telegram and paste the following bot link into any chat:</p>
+<p class="link-line"><span class="link-icon"><svg viewBox="0 0 24 24"><path d="M21.4 3.1 2.8 10.3c-1.27.5-1.26 1.2-.23 1.52l4.77 1.49 1.84 5.83c.22.63.11.88.76.88.5 0 .72-.23.98- .76l-2.38-1.74 4.7 3.47c.86.48 1.48.23 1.69-.8l3.03-14.3c.31-1.28-.49-1.86-1.6-1.35ZM8.08 12.98l10.96-6.92c.55-.33 1.05-.15.64.21l-8.92 8.06-.35 3.72-2.33-5.07Z"/></svg></span><a href="https://t.me/fun_message_scoring_bot?start=ref_7988395055" target="_blank" rel="noopener">https://t.me/fun_message_scoring_bot?start=ref_7988395055</a></p>
+<p>Open the link and tap Start. The bot will send you a response.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/Y9HfH7b7/IMG-9932.jpg" alt="Image 4"></div>
+<p>After starting the bot, tap Menu and use the /games command.</p>
+<p>FUNBot will then send you a message containing a Play Now option.</p>
+<p>Long-press the Play Now option and copy the FUNWebsite link</p>
+<p>Open the copied link in Chrome.</p>
+<p>Now Link email address.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/DZnsNgwv/IMG-9933.jpg" alt="Image 5"></div>
+<div class="image-wrap"><img src="https://i.postimg.cc/3R1pQvyH/IMG-9925.jpg" alt="Image 6"></div>
+<p>Scroll to the right side until you see the option to link your email.</p>
+<p>For this second FUNToken account, use a different email address. An OTP will be sent to that email. Enter the OTP to complete the email verification.</p>
+<h3>Your 2 Accounts Are Now Ready</h3>
+<p>You should now have:</p>
+<ul><li>Account 1: FUNToken account through Mises Browser</li><li>Account 2: FUNToken account through Telegram/Chrome</li></ul>
+<p>Both accounts should have different email addresses.</p>
+<p>Remember: the email used for each FUNToken account must also be used to log in to the mobile games for that account. Rewards from completed game levels will be added to the corresponding FUNToken account.</p>
+</section>
+
+<section class="block" id="mobile-games">
+<h2><span class="section-num">3.</span> Mobile Games</h2>
+<p>There are currently 2 mobile games to play during the month.</p>
+<div class="game-links">
+<a class="game-card" href="https://play.google.com/store/apps/details?id=com.rewardriot.bouncehelix" target="_blank" rel="noopener" aria-label="Open Bounce Helix on Google Play"><span class="play-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 2.5 14 12 3.6 21.5c-.37-.28-.6-.74-.6-1.3V3.8c0-.56.23-1.02.6-1.3Zm11.65 8.28 2.92-2.67 2.9 1.66c.62.35.93.8.93 1.23s-.31.88-.93 1.23l-2.9 1.66-2.92-2.67Zm-.95.87L4.86 3.5l8.56 7.65.88.5Zm0 .7.88-.5 8.56 7.65-2.9 1.66-6.54-8.81Z"/></svg></span><span><span class="game-name">Bounce Helix</span><span class="game-sub">Google Play</span></span></a>
+<a class="game-card" href="https://play.google.com/store/apps/details?id=com.rewardriot.knifestrike" target="_blank" rel="noopener" aria-label="Open Knife Strike on Google Play"><span class="play-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 2.5 14 12 3.6 21.5c-.37-.28-.6-.74-.6-1.3V3.8c0-.56.23-1.02.6-1.3Zm11.65 8.28 2.92-2.67 2.9 1.66c.62.35.93.8.93 1.23s-.31.88-.93 1.23l-2.9 1.66-2.92-2.67Zm-.95.87L4.86 3.5l8.56 7.65.88.5Zm0 .7.88-.5 8.56 7.65-2.9 1.66-6.54-8.81Z"/></svg></span><span><span class="game-name">Knife Strike</span><span class="game-sub">Google Play</span></span></a>
+</div>
+
+<hr class="rule">
+<h2><span class="section-num">4.</span> How to Log In to the Games</h2>
+<div class="image-wrap"><img src="https://i.postimg.cc/9QShXmR7/IMG-9934.jpg" alt="Image 7"></div>
+<p>When logging in to a mobile game, always use the same email address that is connected to the FUNToken account you are working with.</p>
+<p>For example:</p>
+<ul><li>FUNToken Account 1 → Email 1 → Mobile Game Account 1 (bounce helix)</li><li>FUNToken Account 2 → Email 2 → Mobile Game Account 2 (bounce helix)</li></ul>
+<p>Once you complete all 50 levels of a game for one FUNToken account, log out of that mobile game account and log in using the email connected to your second FUNToken account.</p>
+<p>Then complete the levels for the second account.</p>
+<p>You can skip a referral code inside the mobile games.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/7ZFF8Czp/IMG-9935.jpg" alt="Image 8"></div>
+<hr class="rule">
+<h2><span class="section-num">5.</span> Recommended Game Schedule</h2>
+<h3>Bounce Helix</h3>
+<p>It is recommended to play Bounce Helix on all accounts during the starting days and complete its available levels.</p>
+<h3>Knife Strike</h3>
+<p>You can play Knife Strike throughout the month whenever you have free time.</p>
+<p>Completing around 40 levels of Knife Strike is generally sufficient for the current working routine, as the levels become considerably harder after that point.</p>
+</section>
+
+<section class="block" id="earnings">
+<h2><span class="section-num">6.</span> Earnings &amp; Spins</h2>
+<p>Completing all 50 levels of one mobile game gives 1,275 Spins.</p>
+<p>The Spins are added to the account instantly as the corresponding levels are completed.</p>
+<p>According to the current system, playing one game can generate around 2,000 $FUN per account, depending on the account and current conditions.</p>
+<h3>Important for New Accounts</h3>
+<p>New accounts first need to complete a 30-day login streak to activate and gradually increase their daily Spin limit.</p>
+<p>During the first 30 days, the daily Spin limit can initially be around 5–10 Spins.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/Kjh7m2fj/IMG-9927.jpg" alt="Image 9"></div>
+<div class="image-wrap"><img src="https://i.postimg.cc/prQfT6c3/6BBCE30D-554B-4E33-849A-9368EF4DD85D.jpg" alt="Image 10"></div>
+<p>Open FUNToken every day during these 30 days and use the available Spins.</p>
+<p>This also allows you to claim the daily login bonus and maintain your streak.</p>
+<p>After the 30-day period, the Spin limit can gradually increase. As the daily Spin limit increases, the available Spins can be collected more quickly.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/BQs5yJXZ/IMG-9642.jpg" alt="Image 11"></div>
+</section>
+
+<section class="block">
+<h2><span class="section-num">7.</span> Example Earnings</h2>
+<p>2,000 $FUN ≈ 16$</p>
+<p>With 2 accounts:</p>
+<p>2,000 $FUN × 2 = 4,000 $FUN</p>
+<p>≈ 32$</p>
+<p>This is the Earnings of 1-2 Mobile games. There are already 8+ Mobile games. Many more to come. Have $FUN, The actual amount can vary depending on the account, Spin availability, game rewards, and current $FUN value.</p>
+<p>The setup described here uses 2 accounts. If you have additional eligible accounts, follow the platform’s current account rules and limits. As Multiple Accounts can lead to permanent Ban.</p>
+<hr class="rule">
+<h2><span class="section-num">8.</span> New Users vs. Existing Accounts</h2>
+<p>Existing users may already have a higher Spin limit because their accounts have been active for longer.</p>
+<p>However, their available Spins may need to be replenished through the launch of new games.</p>
+<p>For new users, the first step is to maintain the 30-day daily login streak so the account can become active and its Spin limit can gradually increase.</p>
+<p>The purpose of these requirements is to maintain the system’s balance and help prevent abuse or unfair rewards. As its a long-term project.</p>
+<hr class="rule">
+<h2><span class="section-num">9.</span> Daily Work</h2>
+<h3>What do you need to do every day?</h3>
+<div class="image-wrap"><img src="https://i.postimg.cc/RZpcNfGh/IMG-9933.jpg" alt="Image 12"></div>
+<div class="image-wrap"><img src="https://i.postimg.cc/prQfT6c3/6BBCE30D-554B-4E33-849A-9368EF4DD85D.jpg" alt="Image 13"></div>
+<p>After completing Bounce Helix on your accounts and receiving the available Spins, your main daily task is simple:</p>
+<p>Open FUNToken every day and use your available Spins.</p>
+<p>This is required for claiming the login bonus and maintaining your daily streak.</p>
+<p>It generally takes only 1–2 minutes.</p>
+<p>After the first 30 days, your daily Spin limit can begin increasing gradually.</p>
+</section>
+
+<section class="block">
+<h2><span class="section-num">10.</span> Simple System, No Unnecessary Tasks</h2>
+<p>The name FUN reflects the way the system is designed around games and community activity.</p>
+<p>There are:</p>
+<ul><li>No endless tasks</li><li>No unnecessary activities</li><li>No investment requirement</li><li>No referral requirement for the basic earning process</li></ul>
+<h3>FUN Fact</h3>
+<p>Referral rewards are added when your referral makes a withdrawal.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/Vs9nX24V/3f5cd0fddf3e3aee44a782a69be8b351.jpg" alt="Image 14"></div>
+<div class="image-wrap"><img src="https://i.postimg.cc/kgHbnCX7/IMG-9913.jpg" alt="Image 15"></div>
+<p>Users make withdrawals on a regular basis according to their account activity and available rewards.</p>
+<p>The project has been operating since May 2025.</p>
+<hr class="rule">
+<h2><span class="section-num">11.</span> Official FUNToken Community</h2>
+<p>You can also join the official FUNToken community:</p>
+<p class="link-line"><span class="link-icon"><svg viewBox="0 0 24 24"><path d="M21.4 3.1 2.8 10.3c-1.27.5-1.26 1.2-.23 1.52l4.77 1.49 1.84 5.83c.22.63.11.88.76.88.5 0 .72-.23.98-.76l-2.38-1.74 4.7 3.47c.86.48 1.48.23 1.69-.8l3.03-14.3c.31-1.28-.49-1.86-1.6-1.35ZM8.08 12.98l10.96-6.92c.55-.33 1.05-.15.64.21l-8.92 8.06-.35 3.72-2.33-5.07Z"/></svg></span><a href="https://t.me/FUNToken_OfficialChat" target="_blank" rel="noopener">https://t.me/FUNToken_OfficialChat</a></p>
+<p>English is used in the group.</p>
+<p>Participating in group discussions can contribute to your activity level. According to the current system, users can receive 1 Spin per hour for qualifying messages.</p>
+<hr class="rule">
+<h2><span class="section-num">12.</span> Support</h2>
+<p>For help and guidance:</p>
+<p>@FUN_Detective</p>
+<div class="support-card"><span class="telegram-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21.4 3.1 2.8 10.3c-1.27.5-1.26 1.2-.23 1.52l4.77 1.49 1.84 5.83c.22.63.11.88.76.88.5 0 .72-.23 1-.98- .76l-2.38-1.74 4.7 3.47c.86.48 1.48.23 1.69-.8l3.03-14.3c.31-1.28-.49-1.86-1.6-1.35ZM8.08 12.98l10.96-6.92c.55-.33 1.05-.15.64.21l-8.92 8.06-.35 3.72-2.33-5.07Z"/></svg></span><span><span class="support-handle">Telegram</span><span class="support-sub">@FUN_Detective</span></span></div>
+</section>
+
+<section class="block" id="withdrawals">
+<h2>Final Reminder</h2>
+<p>Keep your account information organized:</p>
+<p>Mises Account → Email 1 → Mobile Games → Rewards to Account 1</p>
+<p>Telegram/Chrome Account → Email 2 → Mobile Games → Rewards to Account 2</p>
+<p>When making a withdrawal, remember that the Mises account must be linked with Telegram as required by the withdrawal process.</p>
+<p>Use the correct email for each account and make sure the same email is used when logging in to its corresponding mobile game.</p>
+<div class="image-wrap"><img src="https://i.postimg.cc/fLctj079/IMG-9431.jpg" alt="Image 16"></div>
+<p>Fairness and balance are important. A close-knit community and team play are key parts of the system.</p>
+<h3>Withdrawals:</h3>
+<div class="image-wrap"><a href="https://i.postimg.cc/fyFVyM73/IMG-9957.jpg" target="_blank" rel="noopener"><img src="https://i.postimg.cc/fyFVyM73/IMG-9957.jpg" alt="Image 17"></a></div>
+<p>The current minimum withdrawal is 2000 $FUN in FUNBot, website shows the minimum withdrawal 20,000 FUN so ignore it, u can still withdraw 2000 $FUN by playing mobile games every month from FUNbot</p>
+<p>You can withdraw $FUN to Mexc Exchange.</p>
+<div class="image-wrap"><a href="https://i.postimg.cc/FHXKBWTc/IMG-9628.jpg" target="_blank" rel="noopener"><img src="https://i.postimg.cc/FHXKBWTc/IMG-9628.jpg" alt="Image 18"></a></div>
+</section>
+</div>
+<div class="footer">FUNToken Guide</div>
+</main>
+<button class="top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+</div>
+</body>
+</html>
